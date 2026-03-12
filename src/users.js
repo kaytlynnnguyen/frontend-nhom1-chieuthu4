@@ -6,7 +6,7 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/users")
+    axios.get("https://backend-nhom1-chieuthu4-1.onrender.com/users")
       .then(res => {
         setUsers(res.data);
       });
