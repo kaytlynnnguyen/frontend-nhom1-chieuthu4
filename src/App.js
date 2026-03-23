@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import Register from './components/Register';
-import Account from './components/Account'; // Nhớ tạo file Account.js trong thư mục components
+import Account from './components/Account/Account'; // Nhớ tạo file Account.js trong thư mục components
 
 function App() {
   return (
