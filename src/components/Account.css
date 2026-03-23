@@ -1,0 +1,62 @@
+.account-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.account-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Ẩn menu đi */
+.account-dropdown {
+  display: none; 
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: 100;
+  border: 1px solid #eee;
+}
+
+/* HIỆU ỨNG: Rê chuột vào wrapper thì hiện dropdown */
+.account-wrapper:hover .account-dropdown {
+  display: block;
+}
+
+.dropdown-box {
+  padding: 15px;
+}
+
+.menu-link {
+  display: block;
+  padding: 8px 0;
+  text-decoration: none;
+  color: #444;
+  font-size: 14px;
+}
+
+.menu-link:hover { color: #e91e63; }
+
+.logout { color: red; cursor: pointer; border-top: 1px solid #eee; margin-top: 5px; }
+
+.btn-auth {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login { background: #e91e63; color: white; }
+.register { background: #f0f0f0; color: #333; }
