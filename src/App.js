@@ -1,28 +1,27 @@
 import React from 'react';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import Register from './components/Register';
-import Account from './components/Account/Account'; // Nhớ tạo file Account.js trong thư mục components
+import Account from './components/Account/Account';
+import FlowerDetail from './components/FlowerDetail';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* --- PHẦN HEADER DÙNG CHUNG --- */}
         <header style={headerStyle}>
           <div className="logo" style={logoStyle}>
             <span style={{ color: '#e91e63' }}>F4</span> FLORA
           </div>
-          
-          {/* Component Account xử lý việc Hover hiện Đăng nhập/Đăng ký */}
           <Account />
         </header>
 
-        {/* --- NỘI DUNG CÁC TRANG --- */}
         <div className="content" style={{ padding: '20px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/flowers/:id" element={<FlowerDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
