@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import Register from './components/Register';
 import Account from './components/Account/Account';
 import FlowerDetail from './components/FlowerDetail';
+import Cart from './components/Cart';
 
 function App() {
   return (
@@ -15,13 +17,19 @@ function App() {
           <div className="logo" style={logoStyle}>
             <span style={{ color: '#e91e63' }}>F4</span> FLORA
           </div>
-          <Account />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Link to="/cart" style={{ color: '#333', textDecoration: 'none', fontSize: '18px' }}>
+              🛒 Giỏ hàng
+            </Link>
+            <Account />
+          </div>
         </header>
 
         <div className="content" style={{ padding: '20px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/flowers/:id" element={<FlowerDetail />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>

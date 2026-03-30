@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
+const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-nhom1-chieuthu4-1.onrender.com';
+
 function Home() {
   const [flowers, setFlowers] = useState([]);
   const [allFlowers, setAllFlowers] = useState([]);
@@ -13,7 +15,7 @@ function Home() {
   useEffect(() => {
     const loadAll = async () => {
       try {
-        const response = await fetch('https://backend-nhom1-chieuthu4-1.onrender.com/flowers');
+        const response = await fetch(`${API_BASE}/flowers`);
         const data = await response.json();
         setAllFlowers(data);
         setFlowers(data);
@@ -42,7 +44,7 @@ function Home() {
         params.append('maxPrice', '1000000');
       }
 
-      const url = `http://localhost:5000/flowers?${params.toString()}`;
+      const url = `${API_BASE}/flowers?${params.toString()}`;
       const response = await fetch(url);
       const data = await response.json();
       setFlowers(data);
@@ -61,12 +63,12 @@ function Home() {
   const getImageUrl = (flower) => {
     if (flower.image) {
       if (flower.image.startsWith('http')) return flower.image;
-      return `http://localhost:5000${flower.image}`;
+      return `${API_BASE}${flower.image}`;
     }
 
     // Dựa theo _id nếu image chưa đầy đủ
     if (flower.raw && flower.raw._id && flower.raw._id.$oid) {
-      return `http://localhost:5000/flower_pics/${flower.raw._id.$oid}.jpg`;
+      return `${API_BASE}/flower_pics/${flower.raw._id.$oid}.jpg`;
     }
 
     // fallback

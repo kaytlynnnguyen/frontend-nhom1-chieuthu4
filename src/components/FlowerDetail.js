@@ -2,17 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
 
+const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-nhom1-chieuthu4-1.onrender.com';
+
 const FlowerDetail = () => {
   const { id } = useParams();
   const [flower, setFlower] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [cartMessage, setCartMessage] = useState('');
 
   useEffect(() => {
     const fetchFlower = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://backend-nhom1-chieuthu4-1.onrender.com/flowers/${id}`);
+        const res = await fetch(`${API_BASE}/flowers/${id}`);
         if (!res.ok) throw new Error('Không tìm thấy sản phẩm');
         const data = await res.json();
         setFlower(data);
@@ -26,6 +30,44 @@ const FlowerDetail = () => {
     fetchFlower();
   }, [id]);
 
+  const addToCart = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setCartMessage('Vui lòng đăng nhập để thêm vào giỏ hàng');
+      return;
+    }
+
+    setAddingToCart(true);
+    setCartMessage('');
+
+    try {
+      const response = await fetch(`${API_BASE}/api/cart/add`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          flowerId: flower.id,
+          quantity: 1
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCartMessage('Đã thêm vào giỏ hàng thành công!');
+      } else {
+        const errorData = await response.json();
+        setCartMessage(errorData.message || 'Không thể thêm vào giỏ hàng');
+      }
+    } catch (err) {
+      setCartMessage('Lỗi kết nối server');
+      console.error('Lỗi thêm vào giỏ hàng:', err);
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
   if (loading) return <div className="catalog-container">Đang tải...</div>;
   if (error) return <div className="catalog-container">{error}</div>;
   if (!flower) return <div className="catalog-container">Không tìm thấy sản phẩm.</div>;
@@ -33,11 +75,11 @@ const FlowerDetail = () => {
   const getImageUrl = () => {
     if (flower.image) {
       if (flower.image.startsWith('http')) return flower.image;
-      return `http://localhost:5000${flower.image}`;
+      return `${API_BASE}${flower.image}`;
     }
 
     if (flower.raw && flower.raw._id && flower.raw._id.$oid) {
-      return `http://localhost:5000/flower_pics/${flower.raw._id.$oid}.jpg`;
+      return `${API_BASE}/flower_pics/${flower.raw._id.$oid}.jpg`;
     }
 
     return 'https://via.placeholder.com/640x480?text=No+Image';
@@ -64,7 +106,22 @@ const FlowerDetail = () => {
           <p><strong>Loại hoa:</strong> {flower.category}</p>
           <p><strong>Mô tả:</strong> {flower.description}</p>
           <p><strong>Ý nghĩa:</strong> {flower.meaning}</p>
-          <button className="btn-add">Thêm vào giỏ</button>
+          <button
+            className="btn-add"
+            onClick={addToCart}
+            disabled={addingToCart}
+          >
+            {addingToCart ? 'Đang thêm...' : 'Thêm vào giỏ'}
+          </button>
+          {cartMessage && (
+            <p style={{
+              marginTop: '10px',
+              color: cartMessage.includes('thành công') ? '#4CAF50' : '#f44336',
+              fontWeight: 'bold'
+            }}>
+              {cartMessage}
+            </p>
+          )}
         </div>
       </div>
     </div>
