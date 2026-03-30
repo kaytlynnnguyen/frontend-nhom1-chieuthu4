@@ -20,7 +20,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Gửi dữ liệu đăng ký lên Server
-      const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const res = await axios.post('https://backend-nhom1-chieuthu4-1.onrender.com/api/auth/register', formData);
       
       alert(res.data.msg); // Hiện thông báo "Đăng ký thành công!"
       navigate('/login');   // Chuyển sang trang Login để user đăng nhập

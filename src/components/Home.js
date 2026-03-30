@@ -13,7 +13,7 @@ function Home() {
   useEffect(() => {
     const loadAll = async () => {
       try {
-        const response = await fetch('http://localhost:5000/flowers');
+        const response = await fetch('https://backend-nhom1-chieuthu4-1.onrender.com/flowers');
         const data = await response.json();
         setAllFlowers(data);
         setFlowers(data);

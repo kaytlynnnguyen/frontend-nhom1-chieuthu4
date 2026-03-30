@@ -12,7 +12,7 @@ const FlowerDetail = () => {
     const fetchFlower = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:5000/flowers/${id}`);
+        const res = await fetch(`https://backend-nhom1-chieuthu4-1.onrender.com/flowers/${id}`);
         if (!res.ok) throw new Error('Không tìm thấy sản phẩm');
         const data = await res.json();
         setFlower(data);
