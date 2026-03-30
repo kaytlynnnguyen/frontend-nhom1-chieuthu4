@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
-
-const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-nhom1-chieuthu4-1.onrender.com';
+import { API_BASE } from '../apiConfig';
 
 const FlowerDetail = () => {
-  const { id } = useParams();
+  const { id: routeFlowerId } = useParams();
   const [flower, setFlower] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -16,7 +15,7 @@ const FlowerDetail = () => {
     const fetchFlower = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${API_BASE}/flowers/${id}`);
+        const res = await fetch(`${API_BASE}/flowers/${routeFlowerId}`);
         if (!res.ok) throw new Error('Không tìm thấy sản phẩm');
         const data = await res.json();
         setFlower(data);
@@ -28,7 +27,7 @@ const FlowerDetail = () => {
     };
 
     fetchFlower();
-  }, [id]);
+  }, [routeFlowerId]);
 
   const addToCart = async () => {
     const token = localStorage.getItem('token');
@@ -48,17 +47,23 @@ const FlowerDetail = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          flowerId: flower.id,
+          flowerId: Number(flower.id ?? routeFlowerId),
           quantity: 1
         })
       });
 
       if (response.ok) {
-        const data = await response.json();
+        await response.json();
         setCartMessage('Đã thêm vào giỏ hàng thành công!');
       } else {
-        const errorData = await response.json();
-        setCartMessage(errorData.message || 'Không thể thêm vào giỏ hàng');
+        let msg = 'Không thể thêm vào giỏ hàng';
+        try {
+          const errJson = await response.json();
+          msg = errJson.message || errJson.msg || msg;
+        } catch {
+          /* response không phải JSON */
+        }
+        setCartMessage(msg);
       }
     } catch (err) {
       setCartMessage('Lỗi kết nối server');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom'; // Thêm Link để chuyển sang trang đăng ký
+import { API_BASE } from '../apiConfig';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,9 +12,9 @@ const Login = () => {
     e.preventDefault();
     try {
       // 1. Gửi yêu cầu đăng nhập đến Backend
-      const response = await axios.post('https://backend-nhom1-chieuthu4-1.onrender.com/api/auth/login', { 
-        email, 
-        password 
+      const response = await axios.post(`${API_BASE}/api/auth/login`, {
+        email,
+        password
       });
 
       // 2. Lấy Token và thông tin User từ phản hồi của Server
@@ -21,7 +22,8 @@ const Login = () => {
 
       // 3. Cất vào localStorage để dùng cho các lần sau
       localStorage.setItem('token', token);
-      localStorage.setItem('userName', user.name); // Lưu tên để hiển thị ở trang Home
+      const displayName = [user.firstName, user.lastName].filter(Boolean).join(' ').trim();
+      localStorage.setItem('userName', displayName || user.email || '');
 
       alert('Đăng nhập thành công!');
 

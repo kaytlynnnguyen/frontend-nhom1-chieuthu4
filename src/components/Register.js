@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { API_BASE } from '../apiConfig';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Gửi dữ liệu đăng ký lên Server
-      const res = await axios.post('https://backend-nhom1-chieuthu4-1.onrender.com/api/auth/register', formData);
+      const res = await axios.post(`${API_BASE}/api/auth/register`, formData);
       
       alert(res.data.msg); // Hiện thông báo "Đăng ký thành công!"
       navigate('/login');   // Chuyển sang trang Login để user đăng nhập

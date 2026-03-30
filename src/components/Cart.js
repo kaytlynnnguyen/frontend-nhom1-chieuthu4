@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-
-const API_BASE = 'https://backend-nhom1-chieuthu4-1.onrender.com';
+import { API_BASE } from '../apiConfig';
 
 const Cart = () => {
   const [cart, setCart] = useState({ items: [], totalAmount: 0, itemCount: 0 });
