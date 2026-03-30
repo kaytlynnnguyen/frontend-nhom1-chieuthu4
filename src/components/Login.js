@@ -21,7 +21,7 @@ const Login = () => {
 
       // 3. Cất vào localStorage để dùng cho các lần sau
       localStorage.setItem('token', token);
-      localStorage.setItem('userName', user.firstName); // Lưu tên để hiển thị ở trang Home
+      localStorage.setItem('userName', user.name); // Lưu tên để hiển thị ở trang Home
 
       alert('Đăng nhập thành công!');
 
