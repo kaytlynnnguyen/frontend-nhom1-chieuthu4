@@ -92,7 +92,7 @@ const FlowerDetail = () => {
 
   return (
     <div className="product-detail-container">
-      <Link to="/" className="btn-back">← Trở về danh sách</Link>
+      <Link to="/" className="btn-back">← BACK</Link>
       <div className="product-detail-card">
         <div className="product-detail-image-wrap">
           <img

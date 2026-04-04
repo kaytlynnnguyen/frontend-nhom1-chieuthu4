@@ -17,16 +17,23 @@ const Register = () => {
   // Hàm cập nhật dữ liệu khi user gõ phím
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
-      // Gửi dữ liệu đăng ký lên Server
       const res = await axios.post(`${API_BASE}/api/auth/register`, formData);
-      
-      alert(res.data.msg); // Hiện thông báo "Đăng ký thành công!"
-      navigate('/login');   // Chuyển sang trang Login để user đăng nhập
+      navigate('/login');
     } catch (err) {
-      alert('Lỗi: ' + (err.response?.data?.msg || 'Đăng ký thất bại'));
+      const message = err.response?.data?.msg || err.response?.data?.message || err.response?.data?.error || 'Đăng ký thất bại';
+      console.error('Register error:', err.response?.data || err);
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,8 +49,15 @@ const Register = () => {
         <br />
         <input type="password" placeholder="Mật khẩu" name="password" value={password} onChange={onChange} required style={inputStyle} />
         <br />
-        <button type="submit" style={btnStyle}>Đăng ký</button>
+        <button type="submit" style={btnStyle} disabled={loading}>
+          {loading ? 'Đang đăng ký...' : 'Đăng ký'}
+        </button>
       </form>
+      {error && (
+        <div style={{ color: 'red', marginTop: '15px', textAlign: 'center' }}>
+          {error}
+        </div>
+      )}
       <p style={{ textAlign: 'center', marginTop: '10px' }}>
         Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
       </p>

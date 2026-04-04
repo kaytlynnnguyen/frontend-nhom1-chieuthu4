@@ -4,7 +4,25 @@ import '../App.css';
 import { API_BASE } from '../apiConfig';
 
 const Cart = () => {
-  const [cart, setCart] = useState({ items: [], totalAmount: 0, itemCount: 0 });
+  const getSavedCart = () => {
+    try {
+      const saved = localStorage.getItem('savedCart');
+      return saved ? JSON.parse(saved) : null;
+    } catch (err) {
+      console.warn('Không đọc được giỏ hàng từ localStorage:', err);
+      return null;
+    }
+  };
+
+  const saveCartToStorage = (cartData) => {
+    try {
+      localStorage.setItem('savedCart', JSON.stringify(cartData));
+    } catch (err) {
+      console.warn('Không lưu giỏ hàng vào localStorage:', err);
+    }
+  };
+
+  const [cart, setCart] = useState(() => getSavedCart() || { items: [], totalAmount: 0, itemCount: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -32,12 +50,17 @@ const Cart = () => {
       if (response.ok) {
         const data = await response.json();
         setCart(data);
+        saveCartToStorage(data);
       } else {
         const errData = await response.json();
         setError(errData.message || 'Không thể tải giỏ hàng');
       }
     } catch (err) {
-      setError('Lỗi kết nối server');
+      const savedCart = getSavedCart();
+      if (savedCart) {
+        setCart(savedCart);
+      }
+      setError('Lỗi kết nối server, hiển thị giỏ hàng lưu trong bộ nhớ');
       console.error('Lỗi tải giỏ hàng:', err);
     } finally {
       setLoading(false);
@@ -61,6 +84,7 @@ const Cart = () => {
       if (response.ok) {
         const data = await response.json();
         setCart(data.cart);
+        saveCartToStorage(data.cart);
       } else {
         const errData = await response.json();
         setError(errData.message || 'Không thể cập nhật số lượng');
@@ -85,6 +109,7 @@ const Cart = () => {
       if (response.ok) {
         const data = await response.json();
         setCart(data.cart);
+        saveCartToStorage(data.cart);
       } else {
         const errData = await response.json();
         setError(errData.message || 'Không thể xóa sản phẩm');
@@ -92,6 +117,68 @@ const Cart = () => {
     } catch (err) {
       setError('Lỗi kết nối server');
       console.error('Lỗi xóa sản phẩm:', err);
+    }
+  };
+
+  const [showPaymentModal, setShowPaymentModal] = React.useState(false);
+  const [paymentMethod, setPaymentMethod] = React.useState('cash');
+  const [orderMessage, setOrderMessage] = React.useState('');
+  const [paymentError, setPaymentError] = React.useState('');
+  const [processingOrder, setProcessingOrder] = React.useState(false);
+  const [name, setName] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [address, setAddress] = React.useState('');
+
+  const openPaymentModal = () => {
+    setError('');
+    setPaymentError('');
+    setOrderMessage('');
+    setPaymentMethod('cash');
+    setName('');
+    setPhone('');
+    setAddress('');
+    setShowPaymentModal(true);
+  };
+
+  const closePaymentModal = () => {
+    setShowPaymentModal(false);
+  };
+
+  const confirmOrder = async () => {
+    setPaymentError('');
+    if (!name.trim() || !phone.trim() || !address.trim()) {
+      setPaymentError('Vui lòng điền tên, số điện thoại và địa chỉ');
+      return;
+    }
+
+    setProcessingOrder(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_BASE}/api/orders`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ paymentMethod, name, phone, address })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const emptyCart = { items: [], totalAmount: 0, itemCount: 0 };
+        setOrderMessage(data.message || 'Đặt đơn thành công');
+        setCart(emptyCart);
+        saveCartToStorage(emptyCart);
+        setShowPaymentModal(false);
+      } else {
+        const errData = await response.json();
+        setPaymentError(errData.message || 'Không thể đặt đơn');
+      }
+    } catch (err) {
+      setPaymentError('Lỗi kết nối server');
+      console.error('Lỗi đặt đơn:', err);
+    } finally {
+      setProcessingOrder(false);
     }
   };
 
@@ -176,10 +263,93 @@ const Cart = () => {
             </div>
             <div className="cart-actions">
               <Link to="/" className="btn-secondary">Tiếp tục mua sắm</Link>
-              <button className="btn-primary">Thanh toán</button>
+              <button className="btn-primary" onClick={openPaymentModal}>Thanh toán</button>
             </div>
           </div>
         </>
+      )}
+
+      {orderMessage && <div className="success-message">{orderMessage}</div>}
+
+      {showPaymentModal && (
+        <div className="payment-modal-overlay">
+          <div className="payment-modal">
+            <h3>Chọn phương thức thanh toán</h3>
+            <div className="payment-options">
+              <label>
+                <input
+                  type="radio"
+                  name="payment"
+                  value="cash"
+                  checked={paymentMethod === 'cash'}
+                  onChange={() => setPaymentMethod('cash')}
+                />
+                Thanh toán tiền mặt
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="payment"
+                  value="bank"
+                  checked={paymentMethod === 'bank'}
+                  onChange={() => setPaymentMethod('bank')}
+                />
+                Chuyển khoản
+              </label>
+            </div>
+
+            <div className="payment-form-fields">
+              <label>
+                Tên người nhận
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Nhập tên của bạn"
+                />
+              </label>
+              <label>
+                Số điện thoại
+                <input
+                  type="text"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Nhập số điện thoại"
+                />
+              </label>
+              <label>
+                Địa chỉ nhận hàng
+                <textarea
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Nhập địa chỉ giao hàng"
+                />
+              </label>
+            </div>
+
+            {paymentMethod === 'bank' && (
+              <div className="bank-transfer-preview">
+                <p>Quét mã QR demo để thanh toán:</p>
+                <img
+                  src="https://i.imgur.com/WP7wK0M.png"
+                  alt="QR thanh toán demo"
+                />
+                <p>Ngân hàng: F4 Bank<br />Số tài khoản: 0123456789</p>
+              </div>
+            )}
+
+            {paymentError && <div className="error-message">{paymentError}</div>}
+
+            <div className="payment-modal-actions">
+              <button className="btn-secondary" onClick={closePaymentModal}>
+                Hủy
+              </button>
+              <button className="btn-primary" onClick={confirmOrder} disabled={processingOrder}>
+                {processingOrder ? 'Đang xử lý...' : 'Xác nhận'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

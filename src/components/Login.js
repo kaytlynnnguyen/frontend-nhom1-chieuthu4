@@ -6,33 +6,33 @@ import { API_BASE } from '../apiConfig';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Khai báo điều hướng
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
-      // 1. Gửi yêu cầu đăng nhập đến Backend
       const response = await axios.post(`${API_BASE}/api/auth/login`, {
         email,
         password
       });
 
-      // 2. Lấy Token và thông tin User từ phản hồi của Server
       const { token, user } = response.data;
-
-      // 3. Cất vào localStorage để dùng cho các lần sau
       localStorage.setItem('token', token);
       const displayName = [user.firstName, user.lastName].filter(Boolean).join(' ').trim();
       localStorage.setItem('userName', displayName || user.email || '');
 
-      alert('Đăng nhập thành công!');
-
-      // 4. Chuyển hướng về trang chủ ngay lập tức
-      navigate('/'); 
-      
+      navigate('/');
     } catch (error) {
-      // Hiển thị lỗi từ server (ví dụ: "Thông tin đăng nhập không chính xác")
-      alert('Lỗi: ' + (error.response?.data?.msg || 'Không thể đăng nhập'));
+      const message = error.response?.data?.msg || error.response?.data?.message || error.response?.data?.error || 'Không thể đăng nhập';
+      console.error('Login error:', error.response?.data || error);
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,10 +62,20 @@ const Login = () => {
           />
         </div>
         <br/>
-        <button type="submit" style={{ width: '100%', padding: '10px', cursor: 'pointer' }}>
-          Đăng nhập
+        <button
+          type="submit"
+          style={{ width: '100%', padding: '10px', cursor: loading ? 'not-allowed' : 'pointer' }}
+          disabled={loading}
+        >
+          {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
         </button>
       </form>
+
+      {error && (
+        <div style={{ color: 'red', marginTop: '15px', textAlign: 'center' }}>
+          {error}
+        </div>
+      )}
 
       <p style={{ marginTop: '15px', textAlign: 'center' }}>
         Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>

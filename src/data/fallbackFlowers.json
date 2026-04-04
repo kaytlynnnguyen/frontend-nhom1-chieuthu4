@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Hoa hồng đỏ",
+    "image": "/flower_pics/1.jpg",
+    "price": 400000,
+    "category": "bohoa",
+    "description": "Sự kết hợp giữa sắc đỏ thẫm của hoa hồng và giấy gói trắng tinh giản làm nổi bật sự sang trọng.",
+    "meaning": "Biểu tượng bất diệt của tình yêu nồng cháy và sự lãng mạn. Đây là lựa chọn hàng đầu cho các buổi hẹn hò hoặc kỷ niệm."
+  },
+  {
+    "id": 2,
+    "name": "Hoa tulip trắng",
+    "image": "/flower_pics/2.jpg",
+    "price": 350000,
+    "category": "bohoa",
+    "description": "Những bông Tulip trắng vươn dài, gói trong giấy báo cổ điển mang đậm phong cách Châu Âu.",
+    "meaning": "Thể hiện sự thanh cao, mới mẻ và một lời xin lỗi chân thành hoặc mong muốn hòa bình trong một mối quan hệ."
+  },
+  {
+    "id": 3,
+    "name": "Hoa cẩm tú cầu",
+    "image": "/flower_pics/3.jpg",
+    "price": 400000,
+    "category": "bohoa",
+    "description": "Đóa cẩm tú cầu xanh dương lớn được bao bọc bởi lớp giấy gói trắng tinh khôi, tạo nên vẻ đẹp thanh tao và dịu mắt.",
+    "meaning": "Tượng trưng cho lòng biết ơn, sự chân thành và những cảm xúc nhẹ nhàng. Màu xanh dương còn mang thông điệp về sự hy vọng và bình yên."
+  },
+  {
+    "id": 4,
+    "name": "Hoa hồng trắng",
+    "image": "/flower_pics/4.jpg",
+    "price": 300000,
+    "category": "bohoa",
+    "description": "Bó hoa gồm những đóa hồng trắng cao cấp, kết hợp cùng lá bạc và hoa phụ xanh mát. Thiết kế theo phong cách hiện đại, thanh lịch với giấy gói trắng tối giản.",
+    "meaning": "Tượng trưng cho sự thuần khiết, chân thành và một khởi đầu mới tốt đẹp. Là món quà hoàn hảo để bày tỏ lòng tôn trọng và tình yêu trong sáng."
+  },
+  {
+    "id": 5,
+    "name": "Hoa hồng trắng kết hợp lá phụ xanh mướt",
+    "image": "/flower_pics/5.jpg",
+    "price": 600000,
+    "category": "bohoa",
+    "description": "Bó hoa kết hợp nhiều bông hồng trắng nở rộ, xen kẽ lá phụ xanh mướt, gói trong giấy lụa trắng sang trọng.",
+    "meaning": "Đại diện cho tình yêu thuần khiết, sự tôn trọng và khởi đầu mới trọn vẹn. Đây là lựa chọn hoàn hảo cho các dịp lễ cưới hoặc kỷ niệm trang trọng."
+  },
+  {
+    "id": 6,
+    "name": "Hoa hướng dương",
+    "image": "/flower_pics/6.jpg",
+    "price": 600000,
+    "category": "bohoa",
+    "description": "Bó hoa lớn phối hợp giữa hoa hướng dương và các loại hồng tone cam, sử dụng giấy gói đồng màu rực rỡ.",
+    "meaning": "Biểu tượng của năng lượng dồi dào, sự nhiệt huyết và khát khao vươn tới thành công. Rất thích hợp tặng trong các dịp khai trương hoặc chúc mừng thăng tiến."
+  },
+  {
+    "id": 7,
+    "name": "Hoa hồng phấn",
+    "image": "/flower_pics/7.jpg",
+    "price": 700000,
+    "category": "bohoa",
+    "description": "Bó hoa hồng phấn được thiết kế mềm mại, phối hợp với lá bạc và hoa baby trắng.",
+    "meaning": "Biểu tượng của sự e ấp, dịu dàng và tình yêu mới chớm nở."
+  },
+  {
+    "id": 8,
+    "name": "Hoa baby trắng",
+    "image": "/flower_pics/8.jpg",
+    "price": 250000,
+    "category": "bohoa",
+    "description": "Bó hoa baby trắng tinh khiết, phù hợp làm quà giản dị và nhẹ nhàng.",
+    "meaning": "Thể hiện sự thuần khiết, tinh khiết và một trái tim chân thành."
+  },
+  {
+    "id": 9,
+    "name": "Hoa cẩm chướng hồng",
+    "image": "/flower_pics/9.jpg",
+    "price": 450000,
+    "category": "bohoa",
+    "description": "Bó hoa cẩm chướng hồng tươi sáng kết hợp cùng các loại lá phụ xanh mướt.",
+    "meaning": "Bày tỏ sự ngưỡng mộ, tình bạn bền chặt và sự cảm ơn chân thành."
+  },
+  {
+    "id": 10,
+    "name": "Hoa lan tím",
+    "image": "/flower_pics/10.jpg",
+    "price": 800000,
+    "category": "giohoa",
+    "description": "Giỏ hoa lan tím phong cách sang trọng, thích hợp tặng sếp hoặc người thân trong dịp đặc biệt.",
+    "meaning": "Tượng trưng cho sự sang trọng, quý phái và tình cảm bền vững."
+  }
+]
