@@ -27,7 +27,6 @@ const Account = () => {
           <div className="dropdown-box">
             <p>Chào, <b>{userName}</b></p>
             <hr />
-            <Link to="/" className="menu-link">Trang chủ</Link>
             <div className="menu-link logout" onClick={handleLogout}>Đăng xuất</div>
           </div>
         ) : (
