@@ -26,7 +26,18 @@ const Login = () => {
       const displayName = [user.firstName, user.lastName].filter(Boolean).join(' ').trim();
       localStorage.setItem('userName', displayName || user.email || '');
 
-      navigate('/');
+      const userEmail = user.email ? user.email.toLowerCase() : '';
+      const userRole = user.role ? user.role.toLowerCase() : '';
+
+      if (userRole === 'admin' || userEmail === 'adminf4@gmail.com') {
+          localStorage.setItem('isAdmin', 'true');
+          navigate('/admin/dashboard');
+      } else {
+          // Thay vì chỉ remove, hãy set hẳn thành 'false' để đồng bộ
+          localStorage.setItem('isAdmin', 'false'); 
+          navigate('/'); 
+      }
+      // navigate('/');
     } catch (error) {
       const message = error.response?.data?.msg || error.response?.data?.message || error.response?.data?.error || 'Không thể đăng nhập';
       console.error('Login error:', error.response?.data || error);

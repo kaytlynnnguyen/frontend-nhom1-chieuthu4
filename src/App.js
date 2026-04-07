@@ -8,6 +8,21 @@ import Register from './components/Register';
 import Account from './components/Account/Account';
 import FlowerDetail from './components/FlowerDetail';
 import Cart from './components/Cart';
+import AdminLayout from './components/AdminLayout';
+import AdminDashboard from './components/AdminDashboard';
+import AdminProduct from './components/AdminProduct';
+import { Navigate } from 'react-router-dom';
+const ProtectedAdminRoute = ({ children }) => {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  const token = localStorage.getItem('token');
+
+  // Nếu không có token hoặc không phải admin, đá về trang login
+  if (!token || !isAdmin) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
@@ -32,6 +47,18 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedAdminRoute>
+                  <AdminLayout />
+                </ProtectedAdminRoute>
+              }
+            >
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="products" element={<AdminProduct />} />
+            </Route>
           </Routes>
         </div>
       </div>
