@@ -15,7 +15,7 @@ const AdminProduct = () => {
         type: 'bohoa' 
     });
 
-    const API_URL = 'http://localhost:5000/flowers'; 
+    const API_URL = 'https://backend-nhom1-chieuthu4-1.onrender.com/flowers'; 
 
     const fetchFlowers = () => {
         axios.get(API_URL)
