@@ -12,6 +12,7 @@ import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './components/AdminDashboard';
 import AdminProduct from './components/AdminProduct';
 import { Navigate } from 'react-router-dom';
+import ChangePassword from './components/ChangePassword';
 const ProtectedAdminRoute = ({ children }) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
   const token = localStorage.getItem('token');
@@ -47,6 +48,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route 
               path="/admin" 
               element={
