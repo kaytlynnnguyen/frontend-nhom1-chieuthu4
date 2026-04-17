@@ -13,7 +13,6 @@ const AdminDashboard = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-            {/* 4 Ô VUÔNG */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
                 <div onClick={() => navigate('/admin/products')} style={cardStyle('#3498db')}>
                     <Package size={30} />
@@ -33,7 +32,6 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-            {/* BIỂU ĐỒ */}
             <div style={{ backgroundColor: '#fff', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
                 <h3 style={{ marginBottom: '20px' }}>Sơ đồ doanh thu sản phẩm</h3>
                 <div style={{ height: '300px' }}>

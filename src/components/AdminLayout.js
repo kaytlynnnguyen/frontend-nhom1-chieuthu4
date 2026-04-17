@@ -14,7 +14,6 @@ const AdminLayout = () => {
 
     return (
         <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f4f6f9' }}>
-            {/* SIDEBAR BÊN TRÁI */}
             <div style={{ width: '280px', backgroundColor: '#2c3e50', color: '#ecf0f1', display: 'flex', flexDirection: 'column', position: 'fixed', height: '100vh' }}>
                 <div style={{ padding: '30px 20px', textAlign: 'center', borderBottom: '1px solid #34495e' }}>
                     <h2 style={{ fontSize: '22px', margin: 0 }}><span style={{ color: '#e91e63' }}>F4</span> FLORA ADMIN</h2>
@@ -29,7 +28,6 @@ const AdminLayout = () => {
                 </nav>
             </div>
 
-            {/* NỘI DUNG BÊN PHẢI */}
             <div style={{ flex: 1, marginLeft: '280px', display: 'flex', flexDirection: 'column' }}>
                 <header style={{ height: '70px', backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 35px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
                     <div style={{ fontWeight: '600', color: '#555' }}>Hệ thống quản trị</div>
@@ -39,7 +37,7 @@ const AdminLayout = () => {
                     </div>
                 </header>
                 <main style={{ padding: '35px' }}>
-                    <Outlet /> {/* Nội dung Dashboard, Sản phẩm... sẽ hiện ở đây */}
+                    <Outlet /> 
                 </main>
             </div>
         </div>

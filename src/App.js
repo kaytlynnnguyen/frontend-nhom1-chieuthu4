@@ -11,6 +11,7 @@ import Cart from './components/Cart';
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './components/AdminDashboard';
 import AdminProduct from './components/AdminProduct';
+import AdminOrder from './components/AdminOrder';
 import { Navigate } from 'react-router-dom';
 import ChangePassword from './components/ChangePassword';
 const ProtectedAdminRoute = ({ children }) => {
@@ -60,6 +61,7 @@ function App() {
               <Route index element={<AdminDashboard />} />
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="products" element={<AdminProduct />} />
+              <Route path="orders" element={<AdminOrder />} />
             </Route>
           </Routes>
         </div>

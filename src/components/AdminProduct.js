@@ -16,6 +16,7 @@ const AdminProduct = () => {
     });
 
     const API_URL = 'https://backend-nhom1-chieuthu4-1.onrender.com/flowers'; 
+    // const API_URL = 'http://localhost:5000/flowers';
 
     const fetchFlowers = () => {
         axios.get(API_URL)
@@ -59,7 +60,6 @@ const AdminProduct = () => {
                 })
                 .catch(err => console.error(err));
         } else {
-            // Khi thêm mới, Backend sẽ tự sinh ID và lưu vào cả 2 nơi
             axios.post(API_URL, dataToSend)
                 .then(() => {
                     alert("Thêm hoa thành công!");
