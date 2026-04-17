@@ -29,6 +29,13 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
+    // 1. Kiểm tra định dạng Gmail (Bắt buộc kết thúc bằng @gmail.com và viết thường)
+    const gmailRegex = /^[a-z0-9](\.?[a-z0-9]){5,}@gmail\.com$/;
+    if (!gmailRegex.test(email)) {
+      return setError('Email không hợp lệ. Vui lòng sử dụng định dạng ...@gmail.com (viết thường)');
+    }
+
+    // 2. Kiểm tra mật khẩu khớp nhau
     if (password !== confirmPassword) {
       return setError('Mật khẩu xác nhận không khớp');
     }
@@ -87,8 +94,8 @@ const Register = () => {
 
           {/* EMAIL */}
           <input
-            type="email"
-            placeholder="Email"
+            type="text" // Đổi sang text để tránh validation mặc định của trình duyệt can thiệp vào Regex
+            placeholder="Email (...@gmail.com)"
             name="email"
             value={email}
             onChange={onChange}
@@ -146,7 +153,7 @@ const Register = () => {
   );
 };
 
-/* ===== STYLE FIX FULL ===== */
+/* ===== STYLES ===== */
 
 const wrapperStyle = {
   height: '100vh',
@@ -175,7 +182,7 @@ const inputStyle = {
   marginBottom: '12px',
   borderRadius: '6px',
   border: '1px solid #ccc',
-  boxSizing: 'border-box' // 🔥 FIX QUAN TRỌNG
+  boxSizing: 'border-box'
 };
 
 const passwordWrapper = {
@@ -190,7 +197,7 @@ const passwordInput = {
   paddingRight: '40px',
   borderRadius: '6px',
   border: '1px solid #ccc',
-  boxSizing: 'border-box' // 🔥 FIX QUAN TRỌNG
+  boxSizing: 'border-box'
 };
 
 const eyeStyle = {
@@ -217,7 +224,12 @@ const btnStyle = {
 const errorStyle = {
   color: 'red',
   marginTop: '10px',
-  textAlign: 'center'
+  textAlign: 'center',
+  padding: '10px',
+  background: '#fff1f0',
+  border: '1px solid #ffa39e',
+  borderRadius: '4px',
+  fontSize: '13px'
 };
 
 const loginStyle = {
